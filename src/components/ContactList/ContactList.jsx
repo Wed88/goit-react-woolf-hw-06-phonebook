@@ -1,18 +1,21 @@
-import React from 'react';
-import ContactItem from 'components/ContactItem/ContactItem';
+import { useSelector } from 'react-redux';
+import { getVisibleContacts } from '../../redux/contactsSelectors';
+import ContactItem from '../ContactItem/ContactItem';
 
-export default function ContactList({ contacts, onDeleteContact }) {
+const ContactList = () => {
+  const visibledContacts = useSelector(getVisibleContacts);
+
   return (
-    <ul>
-      {contacts.map(({ id, name, number }) => (
-        <ContactItem
-          key={id}
-          id={id}
-          name={name}
-          number={number}
-          onDeleteContact={onDeleteContact}
-        />
-      ))}
-    </ul>
+    <>
+      {visibledContacts.length > 0 && (
+        <ul>
+          {visibledContacts.map(({ id, name, number }) => (
+            <ContactItem key={id} id={id} name={name} number={number} />
+          ))}
+        </ul>
+      )}
+    </>
   );
-}
+};
+
+export default ContactList;
